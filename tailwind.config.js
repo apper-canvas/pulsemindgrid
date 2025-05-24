@@ -7,6 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        border: 'hsl(214.3 31.8% 91.4%)',
         primary: {
           DEFAULT: '#6366f1',
           light: '#818cf8',
@@ -29,20 +30,18 @@ export default {
           700: '#334155',
           800: '#1e293b',
           900: '#0f172a'
+        },
+        background: 'hsl(0 0% 100%)',
+        foreground: 'hsl(222.2 84% 4.9%)',
+        muted: {
+          DEFAULT: 'hsl(210 40% 96%)',
+          foreground: 'hsl(215.4 16.3% 46.9%)'
+        },
+        card: {
+          DEFAULT: 'hsl(0 0% 100%)',
+          foreground: 'hsl(222.2 84% 4.9%)'
         }
-    },
-    border: 'hsl(214.3 31.8% 91.4%)',
-    background: 'hsl(0 0% 100%)',
-    foreground: 'hsl(222.2 84% 4.9%)',
-    muted: {
-      DEFAULT: 'hsl(210 40% 96%)',
-      foreground: 'hsl(215.4 16.3% 46.9%)'
-    },
-    card: {
-      DEFAULT: 'hsl(0 0% 100%)',
-      foreground: 'hsl(222.2 84% 4.9%)'
-    }
-  },
+      },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui'],
         heading: ['Inter', 'ui-sans-serif', 'system-ui']
@@ -65,5 +64,5 @@ export default {
     }
   },
   plugins: [],
-  darkMode: 'class',
+  darkMode: 'class'
 }
