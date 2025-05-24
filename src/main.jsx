@@ -24,6 +24,17 @@ const initialState = {
     },
     dailyActivity: []
   },
+  finance: {
+    budgets: [],
+    expenses: [],
+    income: [],
+    financialGoals: [],
+    expenseCategories: [
+      'Housing', 'Transportation', 'Food', 'Entertainment', 
+      'Healthcare', 'Shopping', 'Bills', 'Education', 
+      'Travel', 'Other'
+    ]
+  },
   darkMode: false,
   events: [
     {
