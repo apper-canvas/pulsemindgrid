@@ -273,3 +273,23 @@
 .modal-viewport-constrained {
   max-height: calc(100vh - 4rem);
 }
+
+/* Enhanced Note Modal Styling */
+.note-modal-container {
+  max-height: calc(100vh - 2rem);
+  height: calc(100vh - 2rem);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Note Editor Specific Scrolling */
+.note-editor-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(203 213 225) transparent;
+}
+
+/* Ensure React Quill works properly in scrollable containers */

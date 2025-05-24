@@ -11,15 +11,16 @@ export default function NoteModal({ isOpen, onClose, note }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-modal-backdrop-system flex items-center justify-center p-4"
         onClick={onClose}
       >
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
-          className="bg-white dark:bg-surface-800 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden"
+          className="bg-white dark:bg-surface-800 rounded-2xl shadow-2xl w-full max-w-4xl modal-viewport-constrained overflow-hidden z-modal-system flex flex-col"
           onClick={(e) => e.stopPropagation()}
+          style={{ height: 'calc(100vh - 4rem)', maxHeight: '90vh' }}
         >
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-surface-200 dark:border-surface-700">
@@ -40,7 +41,7 @@ export default function NoteModal({ isOpen, onClose, note }) {
           </div>
 
           {/* Content */}
-          <div className="flex-1 overflow-hidden">
+          <div className="flex-1 overflow-hidden modal-flex-container">
             <NoteEditor
               note={note}
               onClose={onClose}

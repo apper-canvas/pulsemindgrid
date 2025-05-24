@@ -159,8 +159,8 @@ export default function NoteEditor({ note, onClose }) {
   ]
 
   return (
-    <form onSubmit={handleSubmit} className="h-full flex flex-col">
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
+    <form onSubmit={handleSubmit} className="h-full flex flex-col modal-flex-container">
+      <div className="flex-1 overflow-y-auto modal-content-scroll modal-scrollbar p-6 space-y-6" style={{ minHeight: 0 }}>
         {/* Title Field */}
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
@@ -357,7 +357,7 @@ export default function NoteEditor({ note, onClose }) {
       </div>
 
       {/* Footer Actions */}
-      <div className="flex items-center justify-end space-x-3 p-6 border-t border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-800">
+      <div className="flex items-center justify-end space-x-3 p-6 border-t border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-800 flex-shrink-0">
         <button
           type="button"
           onClick={onClose}
