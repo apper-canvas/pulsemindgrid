@@ -149,3 +149,58 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </Provider>
 )
+    
+    case 'ADD_NOTE':
+      return {
+        ...state,
+        notes: [...state.notes, {
+          ...action.payload,
+          id: Date.now().toString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }]
+      }
+    
+    case 'UPDATE_NOTE':
+      return {
+        ...state,
+        notes: state.notes.map(note =>
+          note.id === action.payload.id
+            ? { ...note, ...action.payload, updatedAt: new Date().toISOString() }
+            : note
+        )
+      }
+    
+    case 'DELETE_NOTE':
+      return {
+        ...state,
+        notes: state.notes.filter(note => note.id !== action.payload)
+      }
+    
+    case 'LINK_NOTE_TO_TASK':
+      return {
+        ...state,
+        notes: state.notes.map(note =>
+          note.id === action.payload.noteId
+            ? {
+                ...note,
+                linkedTasks: [...(note.linkedTasks || []), action.payload.taskId],
+                updatedAt: new Date().toISOString()
+              }
+            : note
+        )
+      }
+    
+    case 'LINK_NOTE_TO_GOAL':
+      return {
+        ...state,
+        notes: state.notes.map(note =>
+          note.id === action.payload.noteId
+            ? {
+                ...note,
+                linkedGoals: [...(note.linkedGoals || []), action.payload.goalId],
+                updatedAt: new Date().toISOString()
+              }
+            : note
+        )
+      }

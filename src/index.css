@@ -113,3 +113,23 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-surface-400 dark:bg-surface-500;
 }
+
+/* React Quill Styles */
+.ql-editor {
+  min-height: 200px !important;
+  font-family: inherit !important;
+}
+
+.ql-toolbar {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  @apply border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-900;
+}
+
+.ql-container {
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  @apply border-surface-200 dark:border-surface-700;
+}

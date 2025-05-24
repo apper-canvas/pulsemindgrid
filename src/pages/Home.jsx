@@ -6,6 +6,7 @@ import { format, startOfWeek, addDays, isToday } from 'date-fns'
 import ApperIcon from '../components/ApperIcon'
 import MainFeature from '../components/MainFeature'
 import Calendar from '../components/Calendar/Calendar'
+import Notes from '../components/Notes/Notes'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -212,17 +213,7 @@ export default function Home() {
               )}
 
               {activeModule === 'notes' && (
-                <div className="bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-2xl p-4 lg:p-6 border border-surface-200 dark:border-surface-700">
-                  <div className="text-center py-8 lg:py-12">
-                    <ApperIcon name="FileText" size={48} className="mx-auto text-surface-400 mb-4" />
-                    <h3 className="text-lg lg:text-xl font-semibold text-surface-700 dark:text-surface-300 mb-2">
-                      Notes Module
-                    </h3>
-                    <p className="text-surface-500 dark:text-surface-400">
-                      Notes functionality coming soon. Capture ideas and organize your thoughts.
-                    </p>
-                  </div>
-                </div>
+                <Notes />
               )}
             </motion.div>
           </AnimatePresence>
