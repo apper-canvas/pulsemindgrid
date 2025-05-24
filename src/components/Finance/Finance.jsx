@@ -487,7 +487,7 @@ export default function Finance() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 finance-section">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {budgetsByCategory.map(budget => {
                   const spent = expensesByCategory[budget.category] || 0
                   const percentage = (spent / budget.amount) * 100
                   
@@ -569,7 +569,7 @@ export default function Finance() {
               </div>
 
               <div className="space-y-4 finance-section">
-              <div className="space-y-4">
+                {currentMonthExpenses.map(expense => (
                   <motion.div
                     key={expense.id}
                     className="bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-xl p-4 border border-surface-200 dark:border-surface-700"
@@ -641,7 +641,7 @@ export default function Finance() {
               </div>
 
               <div className="space-y-4 finance-section">
-              <div className="space-y-4">
+                {currentMonthIncome.map(inc => (
                   <motion.div
                     key={inc.id}
                     className="bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-xl p-4 border border-surface-200 dark:border-surface-700"
@@ -713,7 +713,7 @@ export default function Finance() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 finance-section">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {financialGoals.map(goal => {
                   const progress = (goal.currentAmount / goal.targetAmount) * 100
                   
                   return (
@@ -783,8 +783,9 @@ export default function Finance() {
               )}
             </div>
           )}
-        </motion.div>
+          </motion.div>
         </div>
+      </AnimatePresence>
       </AnimatePresence>
 
       {/* Budget Form Modal */}
