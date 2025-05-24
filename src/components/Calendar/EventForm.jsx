@@ -162,7 +162,12 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
   }
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 space-y-6 flex flex-col">
+    <div className="h-full flex flex-col">
+      {/* Scrollable Content */}
+      <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-surface-300 dark:scrollbar-thumb-surface-600 scrollbar-track-transparent">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Form Content */}
+          
       {/* Title */}
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
@@ -374,8 +379,12 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
         </div>
       </div>
 
+        </form>
+      </div>
+
       {/* Action Buttons */}
-      <div className="flex flex-col lg:flex-row justify-between items-center space-y-3 lg:space-y-0 pt-6 border-t border-surface-200 dark:border-surface-700 sticky bottom-0 bg-white dark:bg-surface-800 -mx-6 px-6 -mb-6 pb-6">
+      <div className="flex-shrink-0 bg-white dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700 p-6">
+        <div className="flex flex-col lg:flex-row justify-between items-center space-y-3 lg:space-y-0">
         {event && (
           <motion.button
             type="button"
@@ -401,6 +410,7 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
           </motion.button>
           <motion.button
             type="submit"
+            onClick={handleSubmit}
             className="px-6 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-lg transition-all"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -408,6 +418,7 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
             {event ? 'Update Event' : 'Create Event'}
           </motion.button>
         </div>
+      </div>
       </div>
 
       {/* Delete Confirmation */}
@@ -446,6 +457,6 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
           </motion.div>
         </motion.div>
       )}
-    </form>
+    </div>
   )
 }

@@ -70,7 +70,7 @@ export default function EventModal({ isOpen, onClose, event, selectedDate, selec
 
           {/* Modal */}
           <motion.div
-            className="relative w-full max-w-2xl max-h-[90vh] bg-white dark:bg-surface-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+            className="relative w-full max-w-2xl max-h-[90vh] bg-white dark:bg-surface-800 rounded-2xl shadow-2xl flex flex-col"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -90,7 +90,7 @@ export default function EventModal({ isOpen, onClose, event, selectedDate, selec
             </div>
 
             {/* Form */}
-            <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-surface-300 dark:scrollbar-thumb-surface-600 scrollbar-track-transparent">
+            <div className="flex-1 overflow-hidden">
               <EventForm
                 event={event}
                 selectedDate={selectedDate}
