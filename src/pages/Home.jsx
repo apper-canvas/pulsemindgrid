@@ -7,6 +7,7 @@ import ApperIcon from '../components/ApperIcon'
 import MainFeature from '../components/MainFeature'
 import Calendar from '../components/Calendar/Calendar'
 import Notes from '../components/Notes/Notes'
+import Analytics from '../components/Analytics/Analytics'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -30,7 +31,8 @@ export default function Home() {
     { id: 'habits', label: 'Habits', icon: 'Target' },
     { id: 'goals', label: 'Goals', icon: 'Trophy' },
     { id: 'calendar', label: 'Calendar', icon: 'Calendar' },
-    { id: 'notes', label: 'Notes', icon: 'FileText' }
+    { id: 'notes', label: 'Notes', icon: 'FileText' },
+    { id: 'analytics', label: 'Analytics', icon: 'BarChart3' }
   ]
 
   const completedTasks = tasks.filter(task => task.completed).length
@@ -164,6 +166,7 @@ export default function Home() {
               {activeModule === 'goals' && "Set and achieve your long-term goals"}
               {activeModule === 'calendar' && "Plan your schedule and appointments"}
               {activeModule === 'notes' && "Capture ideas and organize your thoughts"}
+              {activeModule === 'analytics' && "Track your productivity and insights"}
             </p>
           </motion.div>
 
@@ -214,6 +217,10 @@ export default function Home() {
 
               {activeModule === 'notes' && (
                 <Notes />
+              )}
+              
+              {activeModule === 'analytics' && (
+                <Analytics />
               )}
             </motion.div>
           </AnimatePresence>

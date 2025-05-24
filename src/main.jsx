@@ -13,6 +13,17 @@ const initialState = {
   habits: [],
   goals: [],
   notes: [],
+  analytics: {
+    moduleTime: {
+      tasks: 0,
+      habits: 0,
+      goals: 0,
+      calendar: 0,
+      notes: 0,
+      overview: 0
+    },
+    dailyActivity: []
+  },
   darkMode: false,
   events: [
     {
@@ -255,6 +266,33 @@ const rootReducer = (state = initialState, action) => {
         })
       }
     
+    
+    case 'UPDATE_MODULE_TIME':
+      return {
+        ...state,
+        analytics: {
+          ...state.analytics,
+          moduleTime: {
+            ...state.analytics.moduleTime,
+            [action.payload.module]: (state.analytics.moduleTime[action.payload.module] || 0) + action.payload.time
+          }
+        }
+      }
+    
+    case 'LOG_DAILY_ACTIVITY':
+      return {
+        ...state,
+        analytics: {
+          ...state.analytics,
+          dailyActivity: [
+            ...state.analytics.dailyActivity.slice(-29), // Keep last 30 days
+            {
+              date: new Date().toISOString().split('T')[0],
+              ...action.payload
+            }
+          ]
+        }
+      }
     default:
       return state
   }

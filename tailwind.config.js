@@ -40,6 +40,14 @@ export default {
         card: {
           DEFAULT: 'hsl(0 0% 100%)',
           foreground: 'hsl(222.2 84% 4.9%)'
+        },
+        chart: {
+          primary: '#6366f1',
+          secondary: '#10b981',
+          accent: '#f59e0b',
+          success: '#10b981',
+          warning: '#f59e0b',
+          error: '#ef4444'
         }
       },
       fontFamily: {
