@@ -288,7 +288,7 @@ export default function Finance() {
   ]
 
   return (
-    <div className="finance-container">
+    <div className="space-y-6">
       {/* View Navigation */}
       <div className="flex flex-wrap gap-2">
         {views.map(view => (
@@ -329,7 +329,7 @@ export default function Finance() {
       </div>
 
       <AnimatePresence mode="wait">
-        <div className="finance-content">
+        <div className="space-y-6">
           <motion.div
             key={activeView}
             initial={{ opacity: 0, y: 20 }}
@@ -487,7 +487,7 @@ export default function Finance() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 finance-section">
-                {budgetsByCategory.map(budget => {
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   const spent = expensesByCategory[budget.category] || 0
                   const percentage = (spent / budget.amount) * 100
                   
@@ -569,7 +569,7 @@ export default function Finance() {
               </div>
 
               <div className="space-y-4 finance-section">
-                {currentMonthExpenses.map(expense => (
+              <div className="space-y-4">
                   <motion.div
                     key={expense.id}
                     className="bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-xl p-4 border border-surface-200 dark:border-surface-700"
@@ -641,7 +641,7 @@ export default function Finance() {
               </div>
 
               <div className="space-y-4 finance-section">
-                {currentMonthIncome.map(inc => (
+              <div className="space-y-4">
                   <motion.div
                     key={inc.id}
                     className="bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-xl p-4 border border-surface-200 dark:border-surface-700"
@@ -713,7 +713,7 @@ export default function Finance() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 finance-section">
-                {financialGoals.map(goal => {
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   const progress = (goal.currentAmount / goal.targetAmount) * 100
                   
                   return (

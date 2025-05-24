@@ -68,7 +68,8 @@ export default function Calendar() {
   }
 
   return (
-    <div className="bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-2xl border border-surface-200 dark:border-surface-700 overflow-hidden">
+    <div className="module-content">
+      <div className="bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-2xl border border-surface-200 dark:border-surface-700 overflow-hidden">
       {/* Calendar Header */}
       <div className="p-4 lg:p-6 border-b border-surface-200 dark:border-surface-700">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -187,6 +188,7 @@ export default function Calendar() {
         selectedDate={selectedDate}
         selectedTime={selectedTime}
       />
+    </div>
     </div>
   )
 }

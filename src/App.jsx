@@ -10,12 +10,10 @@ function App() {
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark bg-surface-900' : 'bg-gradient-to-br from-surface-50 via-primary/5 to-secondary/5'}`}>
-      <div className="bg-grid-pattern bg-[size:20px_20px]">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
       
       <ToastContainer
         position="top-right"

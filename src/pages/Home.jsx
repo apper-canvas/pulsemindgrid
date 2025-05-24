@@ -54,38 +54,38 @@ export default function Home() {
   })
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
+    <div className="min-h-screen flex">
       {/* Sidebar Navigation */}
       <motion.aside
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        className="w-full lg:w-64 bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl border-r border-surface-200 dark:border-surface-700 lg:h-screen"
+        className="fixed lg:relative lg:flex w-64 h-screen bg-white/90 dark:bg-surface-800/90 backdrop-blur-xl border-r border-surface-200 dark:border-surface-700 z-40 lg:z-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300"
       >
-        <div className="p-4 lg:p-6">
+        <div className="flex flex-col h-full p-6">
           {/* Header */}
-          <div className="flex items-center justify-between mb-6 lg:mb-8">
+          <div className="flex items-center justify-between mb-8">
             <motion.div 
               className="flex items-center space-x-3"
               whileHover={{ scale: 1.05 }}
             >
-              <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center">
                 <ApperIcon name="Brain" size={20} className="text-white" />
               </div>
               <div>
-                <h1 className="text-lg lg:text-xl font-bold text-gradient">MindGrid</h1>
-                <p className="text-xs text-surface-600 dark:text-surface-400 hidden lg:block">Your Second Brain</p>
+                <h1 className="text-xl font-bold text-gradient">MindGrid</h1>
+                <p className="text-xs text-surface-600 dark:text-surface-400">Your Second Brain</p>
               </div>
             </motion.div>
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-lg neu-button hover:shadow-inner-neu transition-all duration-200"
+              className="p-2 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 transition-all duration-200"
             >
               <ApperIcon name={darkMode ? 'Sun' : 'Moon'} size={16} />
             </button>
           </div>
 
           {/* Time Display */}
-          <div className="hidden lg:block mb-6 p-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl border border-primary/20">
+          <div className="mb-6 p-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl border border-primary/20">
             <div className="text-2xl font-bold text-surface-800 dark:text-surface-200">
               {format(currentTime, 'HH:mm')}
             </div>
@@ -95,32 +95,32 @@ export default function Home() {
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-1 gap-3 mb-6">
+          <div className="grid grid-cols-1 gap-3 mb-6">
             <motion.div 
-              className="p-3 lg:p-4 bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-200 dark:border-green-800"
+              className="p-4 bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-200 dark:border-green-800"
               whileHover={{ scale: 1.02 }}
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-lg lg:text-2xl font-bold text-green-700 dark:text-green-400">
+                  <div className="text-2xl font-bold text-green-700 dark:text-green-400">
                     {completedTasks}/{totalTasks}
                   </div>
-                  <div className="text-xs lg:text-sm text-green-600 dark:text-green-500">Tasks Done</div>
+                  <div className="text-sm text-green-600 dark:text-green-500">Tasks Done</div>
                 </div>
                 <ApperIcon name="CheckCircle" className="text-green-500" size={20} />
               </div>
             </motion.div>
 
             <motion.div 
-              className="p-3 lg:p-4 bg-gradient-to-br from-blue-50 to-cyan-100 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl border border-blue-200 dark:border-blue-800"
+              className="p-4 bg-gradient-to-br from-blue-50 to-cyan-100 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl border border-blue-200 dark:border-blue-800"
               whileHover={{ scale: 1.02 }}
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-lg lg:text-2xl font-bold text-blue-700 dark:text-blue-400">
+                  <div className="text-2xl font-bold text-blue-700 dark:text-blue-400">
                     {activeHabits}
                   </div>
-                  <div className="text-xs lg:text-sm text-blue-600 dark:text-blue-500">Habits Today</div>
+                  <div className="text-sm text-blue-600 dark:text-blue-500">Habits Today</div>
                 </div>
                 <ApperIcon name="Zap" className="text-blue-500" size={20} />
               </div>
@@ -128,12 +128,12 @@ export default function Home() {
           </div>
 
           {/* Navigation */}
-          <nav className="space-y-1">
+          <nav className="flex-1 space-y-1">
             {modules.map((module) => (
               <motion.button
                 key={module.id}
                 onClick={() => setActiveModule(module.id)}
-                className={`w-full flex items-center space-x-3 px-3 lg:px-4 py-2 lg:py-3 rounded-xl transition-all duration-200 text-left ${
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 text-left ${
                   activeModule === module.id
                     ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg'
                     : 'hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-700 dark:text-surface-300'
@@ -142,7 +142,7 @@ export default function Home() {
                 whileTap={{ scale: 0.98 }}
               >
                 <ApperIcon name={module.icon} size={18} />
-                <span className="font-medium text-sm lg:text-base">{module.label}</span>
+                <span className="font-medium">{module.label}</span>
               </motion.button>
             ))}
           </nav>
@@ -150,18 +150,18 @@ export default function Home() {
       </motion.aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 lg:p-6 overflow-y-auto">
-        <div className="max-w-7xl mx-auto">
+      <main className="flex-1 lg:ml-0 min-h-screen bg-grid-pattern bg-[size:20px_20px]">
+        <div className="p-6 max-w-7xl mx-auto">
           {/* Header */}
           <motion.div
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="mb-6 lg:mb-8"
+            className="mb-8"
           >
-            <h2 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-surface-800 dark:text-surface-200 mb-2">
+            <h2 className="text-3xl xl:text-4xl font-bold text-surface-800 dark:text-surface-200 mb-2">
               {modules.find(m => m.id === activeModule)?.label}
             </h2>
-            <p className="text-surface-600 dark:text-surface-400 text-sm lg:text-base">
+            <p className="text-surface-600 dark:text-surface-400">
               {activeModule === 'overview' && "Get a bird's eye view of your productivity"}
               {activeModule === 'tasks' && "Manage your daily tasks and priorities"}
               {activeModule === 'habits' && "Track your habits and build streaks"}
@@ -181,28 +181,29 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
+              className="content-container"
             >
               {activeModule === 'overview' && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                   {/* Weekly Calendar */}
-                  <div className="lg:col-span-2 xl:col-span-3 bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-2xl p-4 lg:p-6 border border-surface-200 dark:border-surface-700">
-                    <h3 className="text-lg lg:text-xl font-semibold mb-4 flex items-center">
+                  <div className="lg:col-span-2 xl:col-span-3 bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-2xl p-6 border border-surface-200 dark:border-surface-700">
+                    <h3 className="text-xl font-semibold mb-4 flex items-center">
                       <ApperIcon name="Calendar" className="mr-3 text-primary" size={20} />
                       This Week
                     </h3>
-                    <div className="grid grid-cols-7 gap-2 lg:gap-4">
+                    <div className="grid grid-cols-7 gap-4">
                       {weekDays.map((day, index) => (
                         <motion.div
                           key={index}
-                          className={`text-center p-2 lg:p-4 rounded-xl border transition-all duration-200 ${
+                          className={`text-center p-4 rounded-xl border transition-all duration-200 ${
                             day.isToday
                               ? 'bg-gradient-to-br from-primary to-secondary text-white border-primary shadow-lg'
                               : 'bg-surface-50 dark:bg-surface-700 border-surface-200 dark:border-surface-600 hover:border-primary/50'
                           }`}
                           whileHover={{ scale: 1.05 }}
                         >
-                          <div className="text-xs lg:text-sm font-medium">{day.day}</div>
-                          <div className="text-lg lg:text-xl font-bold mt-1">{day.dayNum}</div>
+                          <div className="text-sm font-medium">{day.day}</div>
+                          <div className="text-xl font-bold mt-1">{day.dayNum}</div>
                         </motion.div>
                       ))}
                     </div>

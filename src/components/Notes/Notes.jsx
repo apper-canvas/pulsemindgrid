@@ -62,7 +62,7 @@ export default function Notes() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="module-content">
       {/* Header Actions */}
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
         <div className="flex flex-col sm:flex-row gap-4 flex-1">

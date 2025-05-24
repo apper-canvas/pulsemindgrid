@@ -115,7 +115,7 @@ export default function MainFeature({ activeModule }) {
   }
 
   return (
-    <div className="space-y-4 lg:space-y-6">
+    <div className="module-content">
       {/* Add Button */}
       <div className="flex justify-end">
         <motion.button
@@ -290,7 +290,7 @@ export default function MainFeature({ activeModule }) {
       </AnimatePresence>
 
       {/* Items List */}
-      <div className="space-y-3 lg:space-y-4">
+      <div className="space-y-4">
         {activeModule === 'tasks' && (
           <AnimatePresence>
             {tasks.length === 0 ? (

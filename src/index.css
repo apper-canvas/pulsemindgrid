@@ -317,3 +317,70 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+/* Integrated Layout System */
+.content-container {
+  min-height: calc(100vh - 12rem);
+  max-width: 100%;
+}
+
+/* Sidebar Layout */
+.sidebar-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar-nav {
+  width: 16rem;
+  min-height: 100vh;
+  position: relative;
+  z-index: 10;
+}
+
+.main-content {
+  flex: 1;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Responsive Sidebar */
+@media (max-width: 1024px) {
+  .sidebar-nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .sidebar-nav.open {
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Content Area Constraints */
+.page-content {
+  max-width: 100%;
+  padding: 1.5rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 1280px) {
+  .page-content {
+    max-width: 1200px;
+  }
+}
+
+/* Module Content Spacing */
+.module-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+}
