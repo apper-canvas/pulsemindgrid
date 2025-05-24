@@ -429,7 +429,7 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
           >
-            className="w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-lg transition-all font-medium"
+            <h4 className="text-lg font-bold text-surface-800 dark:text-surface-200 mb-4">
               Delete Event
             </h4>
             <p className="text-surface-600 dark:text-surface-400 mb-6">
@@ -437,8 +437,8 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
             </p>
             <div className="flex space-x-3 justify-end">
               <button
+                onClick={() => setShowDeleteConfirm(false)}
                 className="px-4 py-2 text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-700 rounded-lg transition-colors"
-      {/* Delete Confirmation Modal */}
               >
                 Cancel
               </button>
