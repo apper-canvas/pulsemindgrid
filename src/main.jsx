@@ -188,6 +188,73 @@ const rootReducer = (state = initialState, action) => {
         )
       }
     
+    case 'LINK_NOTE_TO_NOTE':
+      return {
+        ...state,
+        notes: state.notes.map(note => {
+          if (note.id === action.payload.noteId) {
+            return {
+              ...note,
+              linkedNoteIds: [...new Set([...(note.linkedNoteIds || []), action.payload.targetNoteId])],
+              updatedAt: new Date().toISOString()
+            }
+          }
+          if (note.id === action.payload.targetNoteId) {
+            return {
+              ...note,
+              linkedNoteIds: [...new Set([...(note.linkedNoteIds || []), action.payload.noteId])],
+              updatedAt: new Date().toISOString()
+            }
+          }
+          return note
+        })
+      }
+    
+    case 'UNLINK_NOTE_FROM_TASK':
+      return {
+        ...state,
+        notes: state.notes.map(note =>
+          note.id === action.payload.noteId
+            ? {
+                ...note,
+                linkedTasks: (note.linkedTasks || []).filter(taskId => taskId !== action.payload.taskId),
+                updatedAt: new Date().toISOString()
+              }
+            : note
+        )
+      }
+    
+    case 'UNLINK_NOTE_FROM_GOAL':
+      return {
+        ...state,
+        notes: state.notes.map(note =>
+          note.id === action.payload.noteId
+            ? {
+                ...note,
+                linkedGoals: (note.linkedGoals || []).filter(goalId => goalId !== action.payload.goalId),
+                updatedAt: new Date().toISOString()
+              }
+            : note
+        )
+      }
+    
+    case 'UNLINK_NOTE_FROM_NOTE':
+      return {
+        ...state,
+        notes: state.notes.map(note => {
+          if (note.id === action.payload.noteId || note.id === action.payload.targetNoteId) {
+            return {
+              ...note,
+              linkedNoteIds: (note.linkedNoteIds || []).filter(id => 
+                id !== action.payload.noteId && id !== action.payload.targetNoteId
+              ),
+              updatedAt: new Date().toISOString()
+            }
+          }
+          return note
+        })
+      }
+    
     default:
       return state
   }

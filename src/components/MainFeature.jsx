@@ -7,7 +7,7 @@ import ApperIcon from './ApperIcon'
 
 export default function MainFeature({ activeModule }) {
   const dispatch = useDispatch()
-  const { tasks, habits, goals } = useSelector(state => state)
+  const { tasks, habits, goals, notes } = useSelector(state => state)
   const [showForm, setShowForm] = useState(false)
   const [formData, setFormData] = useState({})
 
@@ -108,6 +108,13 @@ export default function MainFeature({ activeModule }) {
   }
 
   return (
+  const getLinkedNotes = (itemId, itemType) => {
+    return notes.filter(note => 
+      (itemType === 'task' && note.linkedTasks?.includes(itemId)) ||
+      (itemType === 'goal' && note.linkedGoals?.includes(itemId))
+    )
+  }
+
     <div className="space-y-4 lg:space-y-6">
       {/* Add Button */}
       <motion.button
@@ -328,6 +335,7 @@ export default function MainFeature({ activeModule }) {
                             {task.description}
                           </p>
                         )}
+                        
                         <div className="flex flex-wrap items-center gap-2 mt-2">
                           <span className={`text-xs px-2 py-1 rounded-full border ${getPriorityColor(task.priority)}`}>
                             {task.priority}
@@ -335,6 +343,12 @@ export default function MainFeature({ activeModule }) {
                           {task.dueDate && (
                             <span className="text-xs text-surface-600 dark:text-surface-400">
                               Due: {format(new Date(task.dueDate), 'MMM d')}
+                            </span>
+                          )}
+                          {getLinkedNotes(task.id, 'task').length > 0 && (
+                            <span className="flex items-center gap-1 text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full">
+                              <ApperIcon name="FileText" size={12} />
+                              {getLinkedNotes(task.id, 'task').length} note{getLinkedNotes(task.id, 'task').length !== 1 ? 's' : ''}
                             </span>
                           )}
                         </div>
@@ -455,6 +469,12 @@ export default function MainFeature({ activeModule }) {
                         {goal.targetDate && (
                           <span className="text-xs">
                             {differenceInDays(new Date(goal.targetDate), new Date())} days left
+                          </span>
+                        )}
+                        {getLinkedNotes(goal.id, 'goal').length > 0 && (
+                          <span className="flex items-center gap-1 text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full">
+                            <ApperIcon name="FileText" size={12} />
+                            {getLinkedNotes(goal.id, 'goal').length} note{getLinkedNotes(goal.id, 'goal').length !== 1 ? 's' : ''}
                           </span>
                         )}
                       </div>

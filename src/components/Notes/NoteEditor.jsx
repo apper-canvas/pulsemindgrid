@@ -14,12 +14,14 @@ export default function NoteEditor({ note, onClose }) {
     content: '',
     linkedTaskId: '',
     linkedGoalId: '',
-    linkedNoteIds: [],
+    linkedNoteId: '',
     tags: []
   })
   
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [newTag, setNewTag] = useState('')
+  const [linkedNotes, setLinkedNotes] = useState([])
 
   useEffect(() => {
     if (note) {
@@ -28,11 +30,20 @@ export default function NoteEditor({ note, onClose }) {
         content: note.content || '',
         linkedTaskId: note.linkedTaskId || '',
         linkedGoalId: note.linkedGoalId || '',
-        linkedNoteIds: note.linkedNoteIds || [],
+        linkedNoteId: '',
         tags: note.tags || []
       })
+      setLinkedNotes(note.linkedNoteIds || [])
+    } else {
+      setLinkedNotes([])
     }
   }, [note])
+
+  // Get available notes for linking (exclude current note)
+  const availableNotes = notes.filter(n => n.id !== note?.id)
+
+  // Get available tasks and goals for linking
+  const availableTasks = tasks.filter(task => !task.completed)
 
   const validateForm = () => {
     const newErrors = {}
@@ -63,6 +74,7 @@ export default function NoteEditor({ note, onClose }) {
       const noteData = {
         ...formData,
         id: note?.id || Date.now().toString(),
+        linkedNoteIds: linkedNotes,
         createdAt: note?.createdAt || new Date().toISOString(),
         updatedAt: new Date().toISOString()
       }
@@ -75,28 +87,55 @@ export default function NoteEditor({ note, onClose }) {
         toast.success('Note created successfully!')
       }
 
-      // Link note to task if specified
-      if (formData.linkedTaskId) {
-        dispatch({
-          type: 'LINK_NOTE_TO_TASK',
-          payload: { noteId: noteData.id, taskId: formData.linkedTaskId }
-        })
-      }
-
-      // Link note to goal if specified
-      if (formData.linkedGoalId) {
-        dispatch({
-          type: 'LINK_NOTE_TO_GOAL',
-          payload: { noteId: noteData.id, goalId: formData.linkedGoalId }
-        })
-      }
-
       onClose()
     } catch (error) {
       toast.error('Failed to save note. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  const handleAddTag = () => {
+    if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
+      setFormData(prev => ({
+        ...prev,
+        tags: [...prev.tags, newTag.trim()]
+      }))
+      setNewTag('')
+    }
+  }
+
+  const handleRemoveTag = (tagToRemove) => {
+    setFormData(prev => ({
+      ...prev,
+      tags: prev.tags.filter(tag => tag !== tagToRemove)
+    }))
+  }
+
+  const handleLinkNote = () => {
+    if (formData.linkedNoteId && !linkedNotes.includes(formData.linkedNoteId)) {
+      setLinkedNotes(prev => [...prev, formData.linkedNoteId])
+      setFormData(prev => ({ ...prev, linkedNoteId: '' }))
+    }
+  }
+
+  const handleUnlinkNote = (noteId) => {
+    setLinkedNotes(prev => prev.filter(id => id !== noteId))
+  }
+
+  const getLinkedTaskTitle = (taskId) => {
+    const task = tasks.find(t => t.id === taskId)
+    return task ? task.title : 'Unknown Task'
+  }
+
+  const getLinkedGoalTitle = (goalId) => {
+    const goal = goals.find(g => g.id === goalId)
+    return goal ? goal.title : 'Unknown Goal'
+  }
+
+  const getLinkedNoteTitle = (noteId) => {
+    const linkedNote = notes.find(n => n.id === noteId)
+    return linkedNote ? linkedNote.title : 'Unknown Note'
   }
 
   const quillModules = {
@@ -168,7 +207,7 @@ export default function NoteEditor({ note, onClose }) {
         </div>
 
         {/* Linking Options */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
               Link to Task
@@ -179,7 +218,7 @@ export default function NoteEditor({ note, onClose }) {
               className="w-full px-4 py-3 border border-surface-200 dark:border-surface-600 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-surface-700 transition-colors"
             >
               <option value="">Select a task...</option>
-              {tasks.map(task => (
+              {availableTasks.map(task => (
                 <option key={task.id} value={task.id}>{task.title}</option>
               ))}
             </select>
@@ -201,6 +240,120 @@ export default function NoteEditor({ note, onClose }) {
             </select>
           </div>
         </div>
+
+        {/* Link to Other Notes */}
+        <div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
+            Link to Other Notes
+          </label>
+          <div className="flex gap-2">
+            <select
+              value={formData.linkedNoteId}
+              onChange={(e) => setFormData(prev => ({ ...prev, linkedNoteId: e.target.value }))}
+              className="flex-1 px-4 py-3 border border-surface-200 dark:border-surface-600 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-surface-700 transition-colors"
+            >
+              <option value="">Select a note...</option>
+              {availableNotes.map(availableNote => (
+                <option key={availableNote.id} value={availableNote.id}>{availableNote.title}</option>
+              ))}
+            </select>
+            <button
+              type="button"
+              onClick={handleLinkNote}
+              disabled={!formData.linkedNoteId}
+              className="px-4 py-3 bg-primary text-white rounded-xl hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              <ApperIcon name="Link" size={16} />
+            </button>
+          </div>
+          
+          {/* Linked Notes Display */}
+          {linkedNotes.length > 0 && (
+            <div className="mt-3 space-y-2">
+              {linkedNotes.map(noteId => (
+                <div key={noteId} className="flex items-center justify-between p-2 bg-surface-50 dark:bg-surface-700 rounded-lg">
+                  <span className="text-sm">{getLinkedNoteTitle(noteId)}</span>
+                  <button
+                    type="button"
+                    onClick={() => handleUnlinkNote(noteId)}
+                    className="p-1 text-red-500 hover:text-red-700 transition-colors"
+                  >
+                    <ApperIcon name="X" size={14} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Tags */}
+        <div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
+            Tags
+          </label>
+          <div className="flex gap-2 mb-3">
+            <input
+              type="text"
+              value={newTag}
+              onChange={(e) => setNewTag(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
+              placeholder="Add a tag..."
+              className="flex-1 px-4 py-2 border border-surface-200 dark:border-surface-600 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-surface-700 transition-colors"
+            />
+            <button
+              type="button"
+              onClick={handleAddTag}
+              className="px-4 py-2 bg-secondary text-white rounded-xl hover:bg-secondary-dark transition-colors"
+            >
+              Add
+            </button>
+          </div>
+          
+          {/* Tags Display */}
+          {formData.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {formData.tags.map(tag => (
+                <span key={tag} className="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">
+                  {tag}
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveTag(tag)}
+                    className="text-primary/70 hover:text-primary transition-colors"
+                  >
+                    <ApperIcon name="X" size={12} />
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Current Links Summary */}
+        {(formData.linkedTaskId || formData.linkedGoalId || linkedNotes.length > 0) && (
+          <div className="p-4 bg-surface-50 dark:bg-surface-700 rounded-xl">
+            <h4 className="text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">Current Links</h4>
+            <div className="space-y-1 text-sm text-surface-600 dark:text-surface-400">
+              {formData.linkedTaskId && (
+                <div className="flex items-center gap-2">
+                  <ApperIcon name="CheckSquare" size={14} />
+                  <span>Task: {getLinkedTaskTitle(formData.linkedTaskId)}</span>
+                </div>
+              )}
+              {formData.linkedGoalId && (
+                <div className="flex items-center gap-2">
+                  <ApperIcon name="Target" size={14} />
+                  <span>Goal: {getLinkedGoalTitle(formData.linkedGoalId)}</span>
+                </div>
+              )}
+              {linkedNotes.map(noteId => (
+                <div key={noteId} className="flex items-center gap-2">
+                  <ApperIcon name="FileText" size={14} />
+                  <span>Note: {getLinkedNoteTitle(noteId)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Footer Actions */}

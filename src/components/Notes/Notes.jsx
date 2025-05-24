@@ -14,12 +14,20 @@ export default function Notes() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingNote, setEditingNote] = useState(null)
   const [viewMode, setViewMode] = useState('grid') // grid or list
+  const [linkFilter, setLinkFilter] = useState('all') // all, tasks, goals, notes
 
   const filteredNotes = notes.filter(note => {
     const matchesSearch = note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          note.content.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesTag = selectedTag === '' || note.tags?.includes(selectedTag)
-    return matchesSearch && matchesTag
+    
+    const matchesLinkFilter = linkFilter === 'all' || 
+      (linkFilter === 'tasks' && note.linkedTasks?.length > 0) ||
+      (linkFilter === 'goals' && note.linkedGoals?.length > 0) ||
+      (linkFilter === 'notes' && note.linkedNoteIds?.length > 0) ||
+      (linkFilter === 'unlinked' && (!note.linkedTasks?.length && !note.linkedGoals?.length && !note.linkedNoteIds?.length))
+    
+    return matchesSearch && matchesTag && matchesLinkFilter
   })
 
   const allTags = [...new Set(notes.flatMap(note => note.tags || []))]
@@ -44,7 +52,8 @@ export default function Notes() {
   const getLinkedItems = (note) => {
     const linkedTasks = tasks.filter(task => note.linkedTasks?.includes(task.id))
     const linkedGoals = goals.filter(goal => note.linkedGoals?.includes(goal.id))
-    return { linkedTasks, linkedGoals }
+    const linkedNotes = notes.filter(n => note.linkedNoteIds?.includes(n.id))
+    return { linkedTasks, linkedGoals, linkedNotes }
   }
 
   const stripHtmlTags = (html) => {
@@ -79,6 +88,19 @@ export default function Notes() {
             {allTags.map(tag => (
               <option key={tag} value={tag}>{tag}</option>
             ))}
+          </select>
+
+          {/* Link Filter */}
+          <select
+            value={linkFilter}
+            onChange={(e) => setLinkFilter(e.target.value)}
+            className="px-4 py-2 border border-surface-200 dark:border-surface-700 rounded-xl bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl focus:outline-none focus:ring-2 focus:ring-primary/50"
+          >
+            <option value="all">All Notes</option>
+            <option value="tasks">Linked to Tasks</option>
+            <option value="goals">Linked to Goals</option>
+            <option value="notes">Linked to Notes</option>
+            <option value="unlinked">Unlinked</option>
           </select>
         </div>
 
@@ -116,7 +138,7 @@ export default function Notes() {
       <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4' : 'space-y-4'}>
         <AnimatePresence>
           {filteredNotes.map((note) => {
-            const { linkedTasks, linkedGoals } = getLinkedItems(note)
+            const { linkedTasks, linkedGoals, linkedNotes: noteLinks } = getLinkedItems(note)
             
             return (
               <motion.div
@@ -125,7 +147,7 @@ export default function Notes() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className={`bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-xl p-4 border border-surface-200 dark:border-surface-700 hover:border-primary/50 transition-all duration-200 cursor-pointer ${viewMode === 'list' ? 'flex gap-4' : ''}`}
+                className={`bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-xl p-4 border border-surface-200 dark:border-surface-700 hover:border-primary/50 transition-all duration-200 cursor-pointer group ${viewMode === 'list' ? 'flex gap-4' : ''}`}
                 onClick={() => handleEditNote(note)}
                 whileHover={{ scale: 1.02 }}
               >
@@ -154,9 +176,38 @@ export default function Notes() {
                       </span>
                     ))}
                   </div>
+                  {/* Linked Items Indicators */}
+                  {(linkedTasks.length > 0 || linkedGoals.length > 0 || noteLinks.length > 0) && (
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {linkedTasks.length > 0 && (
+                        <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-full">
+                          <ApperIcon name="CheckSquare" size={12} />
+                          <span>{linkedTasks.length} task{linkedTasks.length !== 1 ? 's' : ''}</span>
+                        </div>
+                      )}
+                      {linkedGoals.length > 0 && (
+                        <div className="flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs rounded-full">
+                          <ApperIcon name="Target" size={12} />
+                          <span>{linkedGoals.length} goal{linkedGoals.length !== 1 ? 's' : ''}</span>
+                        </div>
+                      )}
+                      {noteLinks.length > 0 && (
+                        <div className="flex items-center gap-1 px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs rounded-full">
+                          <ApperIcon name="FileText" size={12} />
+                          <span>{noteLinks.length} note{noteLinks.length !== 1 ? 's' : ''}</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
                   
                   <div className="flex justify-between items-center text-xs text-surface-500">
-                    <span>{format(new Date(note.updatedAt), 'MMM d, yyyy')}</span>
+                    <div className="flex items-center gap-2">
+                      <span>{linkedTasks.length + linkedGoals.length + noteLinks.length} links</span>
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ApperIcon name="ExternalLink" size={12} />
+                      </div>
+                    </div>
                     <span>{linkedTasks.length + linkedGoals.length} links</span>
                   </div>
                 </div>
@@ -165,6 +216,19 @@ export default function Notes() {
           })}
         </AnimatePresence>
       </div>
+
+      {/* Empty State */}
+      {filteredNotes.length === 0 && (
+        <div className="text-center py-12">
+          <ApperIcon name="FileText" size={48} className="mx-auto text-surface-400 mb-4" />
+          <h3 className="text-lg font-medium text-surface-800 dark:text-surface-200 mb-2">
+            {notes.length === 0 ? 'No notes yet' : 'No notes match your filters'}
+          </h3>
+          <p className="text-surface-600 dark:text-surface-400">
+            {notes.length === 0 ? 'Create your first note to get started!' : 'Try adjusting your search or filters.'}
+          </p>
+        </div>
+      )}
 
       {/* Note Modal */}
       <NoteModal
