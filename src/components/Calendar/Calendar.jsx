@@ -60,7 +60,7 @@ export default function Calendar() {
     if (view === 'month') {
       return format(currentDate, 'MMMM yyyy')
     } else if (view === 'week') {
-      const weekStart = startOfMonth(currentDate)
+      const weekStart = startOfWeek(currentDate)
       return format(weekStart, 'MMM d') + ' - ' + format(addDays(weekStart, 6), 'MMM d, yyyy')
     } else {
       return format(currentDate, 'EEEE, MMMM d, yyyy')
