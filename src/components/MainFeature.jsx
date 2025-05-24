@@ -130,16 +130,6 @@ export default function MainFeature({ activeModule }) {
           </span>
         </motion.button>
       </div>
-        onClick={() => setShowForm(!showForm)}
-        className="w-full sm:w-auto flex items-center justify-center space-x-2 bg-gradient-to-r from-primary to-secondary text-white px-4 lg:px-6 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-200"
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-      >
-        <ApperIcon name={showForm ? 'X' : 'Plus'} size={20} />
-        <span>
-          {showForm ? 'Cancel' : `Add ${activeModule.slice(0, -1).charAt(0).toUpperCase() + activeModule.slice(1, -1)}`}
-        </span>
-      </motion.button>
 
       {/* Form */}
       <AnimatePresence>
