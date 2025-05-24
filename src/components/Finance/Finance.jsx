@@ -452,15 +452,15 @@ export default function Finance() {
 
               {/* Charts */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-xl p-6 border border-surface-200 dark:border-surface-700">
+                <div className="bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-xl p-6 border border-surface-200 dark:border-surface-700 h-96">
                   <h3 className="text-lg font-semibold mb-4">Budget vs Actual Spending</h3>
-                  <Bar data={budgetVsExpensesData} options={{ responsive: true, maintainAspectRatio: false }} height={300} />
+                  <div className="h-72"><Bar data={budgetVsExpensesData} options={{ responsive: true, maintainAspectRatio: false }} /></div>
                 </div>
 
-                <div className="bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-xl p-6 border border-surface-200 dark:border-surface-700">
+                <div className="bg-white/80 dark:bg-surface-800/80 backdrop-blur-xl rounded-xl p-6 border border-surface-200 dark:border-surface-700 h-96">
                   <h3 className="text-lg font-semibold mb-4">Expense Distribution</h3>
                   {Object.keys(expensesByCategory).length > 0 ? (
-                    <Pie data={expensePieData} options={{ responsive: true, maintainAspectRatio: false }} height={300} />
+                    <div className="h-72"><Pie data={expensePieData} options={{ responsive: true, maintainAspectRatio: false }} /></div>
                   ) : (
                     <div className="flex items-center justify-center h-64 text-surface-500">
                       No expenses recorded this month
