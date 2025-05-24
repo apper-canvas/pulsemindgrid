@@ -293,3 +293,27 @@
 }
 
 /* Ensure React Quill works properly in scrollable containers */
+
+/* Finance Page Layout Constraints */
+.finance-container {
+  height: calc(100vh - 8rem);
+  max-height: calc(100vh - 8rem);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.finance-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(203 213 225) transparent;
+  padding-bottom: 2rem;
+}
+
+.finance-section {
+  max-height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

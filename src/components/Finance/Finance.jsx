@@ -288,7 +288,7 @@ export default function Finance() {
   ]
 
   return (
-    <div className="space-y-6">
+    <div className="finance-container">
       {/* View Navigation */}
       <div className="flex flex-wrap gap-2">
         {views.map(view => (
@@ -329,13 +329,15 @@ export default function Finance() {
       </div>
 
       <AnimatePresence mode="wait">
-        <motion.div
-          key={activeView}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3 }}
-        >
+        <div className="finance-content">
+          <motion.div
+            key={activeView}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-6"
+          >
           {/* Dashboard View */}
           {activeView === 'dashboard' && (
             <div className="space-y-6">
@@ -484,7 +486,7 @@ export default function Finance() {
                 </motion.button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 finance-section">
                 {budgetsByCategory.map(budget => {
                   const spent = expensesByCategory[budget.category] || 0
                   const percentage = (spent / budget.amount) * 100
@@ -566,7 +568,7 @@ export default function Finance() {
                 </motion.button>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 finance-section">
                 {currentMonthExpenses.map(expense => (
                   <motion.div
                     key={expense.id}
@@ -638,7 +640,7 @@ export default function Finance() {
                 </motion.button>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 finance-section">
                 {currentMonthIncome.map(inc => (
                   <motion.div
                     key={inc.id}
@@ -710,7 +712,7 @@ export default function Finance() {
                 </motion.button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 finance-section">
                 {financialGoals.map(goal => {
                   const progress = (goal.currentAmount / goal.targetAmount) * 100
                   
@@ -782,6 +784,7 @@ export default function Finance() {
             </div>
           )}
         </motion.div>
+        </div>
       </AnimatePresence>
 
       {/* Budget Form Modal */}
