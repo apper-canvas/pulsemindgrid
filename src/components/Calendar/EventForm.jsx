@@ -164,7 +164,7 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
   return (
     <div className="flex flex-col h-full">
       {/* Scrollable Form Content */}
-      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin scrollbar-thumb-surface-300 dark:scrollbar-thumb-surface-600 scrollbar-track-transparent">
+      <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 modal-scrollbar">
         {/* Title */}
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
@@ -378,7 +378,7 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
       </div>
 
       {/* Sticky Footer with Action Buttons */}
-      <div className="flex-shrink-0 border-t border-surface-200 dark:border-surface-700 p-6 bg-white dark:bg-surface-800">
+      <div className="flex-shrink-0 border-t border-surface-200 dark:border-surface-700 p-4 bg-white dark:bg-surface-800">
         <div className="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
         {event && (
           <motion.button
@@ -414,12 +414,11 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
           </motion.button>
         </div>
       </div>
-      </div>
 
       {/* Delete Confirmation */}
       {showDeleteConfirm && (
         <motion.div
-          className="fixed inset-0 z-60 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >

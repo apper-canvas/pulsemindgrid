@@ -54,14 +54,14 @@ export default function EventModal({ isOpen, onClose, event, selectedDate, selec
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          className="fixed inset-0 z-modal flex items-center justify-center p-4 overflow-hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
           {/* Backdrop */}
           <motion.div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm z-modal-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -70,7 +70,7 @@ export default function EventModal({ isOpen, onClose, event, selectedDate, selec
 
           {/* Modal */}
           <motion.div
-            className="relative w-full max-w-2xl max-h-[90vh] bg-white dark:bg-surface-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden modal-container"
+            className="relative w-full max-w-2xl h-[90vh] max-h-[90vh] bg-white dark:bg-surface-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden modal-container"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -90,7 +90,7 @@ export default function EventModal({ isOpen, onClose, event, selectedDate, selec
             </div>
 
             {/* Form */}
-            <div className="flex-1 min-h-0">
+            <div className="flex-1 min-h-0 overflow-hidden">
               <EventForm
                 event={event}
                 selectedDate={selectedDate}
