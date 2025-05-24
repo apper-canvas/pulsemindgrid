@@ -181,6 +181,11 @@
   position: relative;
 }
 
+/* Enhanced Modal Positioning */
+.modal-overlay-enhanced {
+  z-index: 9998 !important;
+}
+
 /* Ensure modals appear above footer and all other content */
 .z-modal {
   z-index: 9999 !important;
@@ -194,18 +199,41 @@
 .modal-container {
   min-height: 0;
   max-height: 90vh;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+/* Small viewport optimizations */
+@media (max-height: 768px) {
+  .modal-container {
+    max-height: 85vh;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
 }
 
 /* Responsive Modal Sizing */
 @media (max-height: 600px) {
   .modal-container {
-    max-height: 95vh;
+    max-height: 90vh;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
   }
 }
 
 @media (max-height: 500px) {
   .modal-container {
+    max-height: 95vh;
+    margin-bottom: 0.25rem;
+    margin-top: 0.25rem;
+  }
+}
+
+@media (max-height: 400px) {
+  .modal-container {
     max-height: 98vh;
+    margin-bottom: 0;
+    margin-top: 0;
   }
 }
 
@@ -223,4 +251,25 @@
   flex-direction: column;
   height: 100%;
   min-height: 0;
+  max-height: inherit;
+}
+
+/* Enhanced Z-Index System */
+.z-modal-system {
+  z-index: 10000 !important;
+}
+
+.z-modal-backdrop-system {
+  z-index: 9999 !important;
+}
+
+/* Prevent modal from being hidden behind elements */
+.modal-container {
+  position: relative;
+  z-index: inherit;
+}
+
+/* Ensure modal stays within viewport */
+.modal-viewport-constrained {
+  max-height: calc(100vh - 4rem);
 }
