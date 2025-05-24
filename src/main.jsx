@@ -13,52 +13,7 @@ const initialState = {
   habits: [],
   goals: [],
   notes: [],
-  darkMode: false
-}
-
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'ADD_TASK':
-      return { ...state, tasks: [...state.tasks, action.payload] }
-    case 'TOGGLE_TASK':
-      return {
-        ...state,
-        tasks: state.tasks.map(task =>
-          task.id === action.payload ? { ...task, completed: !task.completed } : task
-        )
-      }
-    case 'ADD_HABIT':
-      return { ...state, habits: [...state.habits, action.payload] }
-    case 'MARK_HABIT_COMPLETE':
-      return {
-        ...state,
-        habits: state.habits.map(habit =>
-          habit.id === action.payload.id
-            ? { ...habit, currentStreak: habit.currentStreak + 1, lastCompleted: new Date() }
-            : habit
-        )
-      }
-    case 'ADD_GOAL':
-      return { ...state, goals: [...state.goals, action.payload] }
-    case 'TOGGLE_DARK_MODE':
-      return { ...state, darkMode: !state.darkMode }
-    default:
-      return state
-  }
-}
-
-const store = configureStore({
-  reducer: rootReducer
-})
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>
-)
-  ],
+  darkMode: false,
   events: [
     {
       id: '1',
@@ -105,13 +60,40 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       location: 'Local Gym',
       attendees: []
     }
-    
+  ]
+}
+
+const rootReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'ADD_TASK':
+      return { ...state, tasks: [...state.tasks, action.payload] }
+    case 'TOGGLE_TASK':
+      return {
+        ...state,
+        tasks: state.tasks.map(task =>
+          task.id === action.payload ? { ...task, completed: !task.completed } : task
+        )
+      }
+    case 'ADD_HABIT':
+      return { ...state, habits: [...state.habits, action.payload] }
+    case 'MARK_HABIT_COMPLETE':
+      return {
+        ...state,
+        habits: state.habits.map(habit =>
+          habit.id === action.payload.id
+            ? { ...habit, currentStreak: habit.currentStreak + 1, lastCompleted: new Date() }
+            : habit
+        )
+      }
+    case 'ADD_GOAL':
+      return { ...state, goals: [...state.goals, action.payload] }
+    case 'TOGGLE_DARK_MODE':
+      return { ...state, darkMode: !state.darkMode }
     case 'ADD_EVENT':
       return {
         ...state,
         events: [...state.events, { ...action.payload, id: Date.now().toString() }]
       }
-    
     case 'UPDATE_EVENT':
       return {
         ...state,
@@ -119,13 +101,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           event.id === action.payload.id ? { ...event, ...action.payload } : event
         )
       }
-    
     case 'DELETE_EVENT':
       return {
         ...state,
         events: state.events.filter(event => event.id !== action.payload)
       }
-    
     case 'TOGGLE_EVENT_REMINDER':
       return {
         ...state,
@@ -135,7 +115,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             : event
         )
       }
-    
     case 'LINK_EVENT_TO_TASK':
       return {
         ...state,
@@ -145,4 +124,28 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             : event
         )
       }
-    
+    case 'LINK_EVENT_TO_PROJECT':
+      return {
+        ...state,
+        events: state.events.map(event =>
+          event.id === action.payload.eventId
+            ? { ...event, linkedProjectId: action.payload.projectId, linkedTaskId: null }
+            : event
+        )
+      }
+    default:
+      return state
+  }
+}
+
+const store = configureStore({
+  reducer: rootReducer
+})
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
+)
