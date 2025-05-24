@@ -107,7 +107,6 @@ export default function MainFeature({ activeModule }) {
     }
   }
 
-  return (
   const getLinkedNotes = (itemId, itemType) => {
     return notes.filter(note => 
       (itemType === 'task' && note.linkedTasks?.includes(itemId)) ||
@@ -115,6 +114,7 @@ export default function MainFeature({ activeModule }) {
     )
   }
 
+  return (
     <div className="space-y-4 lg:space-y-6">
       {/* Add Button */}
       <motion.button
