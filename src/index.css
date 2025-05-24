@@ -133,3 +133,25 @@
   border-right: none !important;
   @apply border-surface-200 dark:border-surface-700;
 }
+
+/* Modal Scrollbars */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-thumb-surface-300::-webkit-scrollbar-thumb {
+  @apply bg-surface-300 rounded-full;
+}
+
+.dark .scrollbar-thumb-surface-600::-webkit-scrollbar-thumb {
+  @apply bg-surface-600 rounded-full;
+}
+
+.scrollbar-track-transparent::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}

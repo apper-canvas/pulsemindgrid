@@ -70,14 +70,14 @@ export default function EventModal({ isOpen, onClose, event, selectedDate, selec
 
           {/* Modal */}
           <motion.div
-            className="relative w-full max-w-2xl max-h-[90vh] bg-white dark:bg-surface-800 rounded-2xl shadow-2xl overflow-hidden"
+            className="relative w-full max-w-2xl max-h-[90vh] bg-white dark:bg-surface-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: "spring", damping: 20, stiffness: 300 }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-surface-200 dark:border-surface-700">
+            <div className="flex items-center justify-between p-6 border-b border-surface-200 dark:border-surface-700 flex-shrink-0">
               <h3 className="text-xl font-bold text-surface-800 dark:text-surface-200">
                 {event ? 'Edit Event' : 'Create New Event'}
               </h3>
@@ -90,7 +90,7 @@ export default function EventModal({ isOpen, onClose, event, selectedDate, selec
             </div>
 
             {/* Form */}
-            <div className="overflow-y-auto max-h-[calc(90vh-80px)]">
+            <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-surface-300 dark:scrollbar-thumb-surface-600 scrollbar-track-transparent">
               <EventForm
                 event={event}
                 selectedDate={selectedDate}

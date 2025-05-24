@@ -162,7 +162,7 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
   }
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 space-y-6">
+    <form onSubmit={handleSubmit} className="p-6 space-y-6 flex flex-col">
       {/* Title */}
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
@@ -375,7 +375,7 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col lg:flex-row justify-between items-center space-y-3 lg:space-y-0 pt-6 border-t border-surface-200 dark:border-surface-700">
+      <div className="flex flex-col lg:flex-row justify-between items-center space-y-3 lg:space-y-0 pt-6 border-t border-surface-200 dark:border-surface-700 sticky bottom-0 bg-white dark:bg-surface-800 -mx-6 px-6 -mb-6 pb-6">
         {event && (
           <motion.button
             type="button"
