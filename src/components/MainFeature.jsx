@@ -68,6 +68,14 @@ export default function MainFeature({ activeComponent, setActiveComponent }) {
       ]
     },
     {
+      id: 'highlights',
+      label: 'Highlights',
+      icon: FileText,
+      component: 'highlights',
+      gradient: 'from-yellow-500 to-orange-600',
+      description: 'Text highlights & annotations'
+    },
+    {
       id: 'divider-1',
       type: 'divider'
     },
