@@ -54,7 +54,7 @@ export default function EventModal({ isOpen, onClose, event, selectedDate, selec
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -70,7 +70,7 @@ export default function EventModal({ isOpen, onClose, event, selectedDate, selec
 
           {/* Modal */}
           <motion.div
-            className="relative w-full max-w-2xl h-[90vh] bg-white dark:bg-surface-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="relative w-full max-w-2xl max-h-[90vh] bg-white dark:bg-surface-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden modal-container"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}

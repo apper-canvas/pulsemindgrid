@@ -170,3 +170,22 @@
   @apply bg-surface-300 dark:bg-surface-600 rounded-full;
   border-radius: 3px;
 }
+
+/* Modal Z-Index Utilities */
+.modal-overlay {
+  z-index: 9998;
+}
+
+.modal-container {
+  z-index: 9999;
+  position: relative;
+}
+
+/* Ensure modals appear above footer and all other content */
+.z-modal {
+  z-index: 9999 !important;
+}
+
+.z-modal-backdrop {
+  z-index: 9998 !important;
+}
