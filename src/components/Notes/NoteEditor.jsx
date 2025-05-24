@@ -22,6 +22,7 @@ export default function NoteEditor({ note, onClose }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [newTag, setNewTag] = useState('')
   const [linkedNotes, setLinkedNotes] = useState([])
+  const [showPopularTags, setShowPopularTags] = useState(false)
 
   useEffect(() => {
     if (note) {
@@ -44,6 +45,15 @@ export default function NoteEditor({ note, onClose }) {
 
   // Get available tasks and goals for linking
   const availableTasks = tasks.filter(task => !task.completed)
+
+  // Popular tags for quick selection
+  const popularTags = [
+    'important', 'urgent', 'ideas', 'meeting', 'project', 'research',
+    'personal', 'work', 'study', 'reference', 'todo', 'reminder',
+    'review', 'draft', 'template', 'archive', 'brainstorm', 'feedback'
+  ]
+
+  const availablePopularTags = popularTags.filter(tag => !formData.tags.includes(tag))
 
   const validateForm = () => {
     const newErrors = {}
@@ -96,14 +106,26 @@ export default function NoteEditor({ note, onClose }) {
   }
 
   const handleAddTag = () => {
-    if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
+    const trimmedTag = newTag.trim().toLowerCase()
+    if (trimmedTag && !formData.tags.includes(trimmedTag)) {
       setFormData(prev => ({
         ...prev,
-        tags: [...prev.tags, newTag.trim()]
+        tags: [...prev.tags, trimmedTag]
       }))
       setNewTag('')
     }
   }
+
+  const handleAddPopularTag = (tag) => {
+    if (!formData.tags.includes(tag)) {
+      setFormData(prev => ({
+        ...prev,
+        tags: [...prev.tags, tag]
+      }))
+    }
+  }
+
+  const handleTogglePopularTags = () => setShowPopularTags(!showPopularTags)
 
   const handleRemoveTag = (tagToRemove) => {
     setFormData(prev => ({
@@ -288,9 +310,11 @@ export default function NoteEditor({ note, onClose }) {
 
         {/* Tags */}
         <div>
-          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-            Tags
-          </label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">
+              Tags
+            </label>
+          </div>
           <div className="flex gap-2 mb-3">
             <input
               type="text"
@@ -305,9 +329,54 @@ export default function NoteEditor({ note, onClose }) {
               onClick={handleAddTag}
               className="px-4 py-2 bg-secondary text-white rounded-xl hover:bg-secondary-dark transition-colors"
             >
-              Add
+              Add Tag
+            </button>
+            <button
+              type="button"
+              onClick={handleTogglePopularTags}
+              className="px-4 py-2 bg-primary/10 text-primary border border-primary/20 rounded-xl hover:bg-primary/20 transition-colors"
+            >
+              <ApperIcon name={showPopularTags ? "ChevronUp" : "ChevronDown"} size={16} />
             </button>
           </div>
+          
+          {/* Popular Tags Section */}
+          {showPopularTags && (
+            <div className="mb-4 p-4 bg-surface-50 dark:bg-surface-700 rounded-xl">
+              <h4 className="text-sm font-medium text-surface-700 dark:text-surface-300 mb-3">Popular Tags</h4>
+              {availablePopularTags.length > 0 ? (
+                <div className="flex flex-wrap gap-2">
+                  {availablePopularTags.map(tag => (
+                    <button
+                      key={tag}
+                      type="button"
+                      onClick={() => handleAddPopularTag(tag)}
+                      className="px-3 py-1 bg-white dark:bg-surface-600 border border-surface-200 dark:border-surface-500 text-surface-700 dark:text-surface-300 text-sm rounded-full hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-colors"
+                    >
+                      <ApperIcon name="Plus" size={12} className="mr-1" />
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-surface-500 dark:text-surface-400">
+                  All popular tags have been added to this note.
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Create Custom Tag Hint */}
+          {formData.tags.length === 0 && (
+            <div className="mb-3 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+              <div className="flex items-start gap-2">
+                <ApperIcon name="Lightbulb" size={16} className="text-blue-600 dark:text-blue-400 mt-0.5" />
+                <div className="text-sm text-blue-700 dark:text-blue-300">
+                  <strong>Pro tip:</strong> Create custom tags by typing in the field above, or choose from popular tags below to organize your notes effectively.
+                </div>
+              </div>
+            </div>
+          )}
           
           {/* Tags Display */}
           {formData.tags.length > 0 && (
