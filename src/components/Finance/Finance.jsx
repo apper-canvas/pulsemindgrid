@@ -786,7 +786,6 @@ export default function Finance() {
           </motion.div>
         </div>
       </AnimatePresence>
-      </AnimatePresence>
 
       {/* Budget Form Modal */}
       <AnimatePresence>
