@@ -48,6 +48,12 @@ export default {
           success: '#10b981',
           warning: '#f59e0b',
           error: '#ef4444'
+        },
+        finance: {
+          income: '#10b981',
+          expense: '#ef4444',
+          budget: '#6366f1',
+          savings: '#06b6d4'
         }
       },
       fontFamily: {

@@ -8,6 +8,7 @@ import MainFeature from '../components/MainFeature'
 import Calendar from '../components/Calendar/Calendar'
 import Notes from '../components/Notes/Notes'
 import Analytics from '../components/Analytics/Analytics'
+import Finance from '../components/Finance/Finance'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -32,7 +33,8 @@ export default function Home() {
     { id: 'goals', label: 'Goals', icon: 'Trophy' },
     { id: 'calendar', label: 'Calendar', icon: 'Calendar' },
     { id: 'notes', label: 'Notes', icon: 'FileText' },
-    { id: 'analytics', label: 'Analytics', icon: 'BarChart3' }
+    { id: 'analytics', label: 'Analytics', icon: 'BarChart3' },
+    { id: 'finance', label: 'Finance', icon: 'DollarSign' }
   ]
 
   const completedTasks = tasks.filter(task => task.completed).length
@@ -167,6 +169,7 @@ export default function Home() {
               {activeModule === 'calendar' && "Plan your schedule and appointments"}
               {activeModule === 'notes' && "Capture ideas and organize your thoughts"}
               {activeModule === 'analytics' && "Track your productivity and insights"}
+              {activeModule === 'finance' && "Manage your finances and track spending"}
             </p>
           </motion.div>
 
@@ -221,6 +224,10 @@ export default function Home() {
               
               {activeModule === 'analytics' && (
                 <Analytics />
+              )}
+              
+              {activeModule === 'finance' && (
+                <Finance />
               )}
             </motion.div>
           </AnimatePresence>

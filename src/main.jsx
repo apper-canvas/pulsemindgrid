@@ -293,6 +293,140 @@ const rootReducer = (state = initialState, action) => {
           ]
         }
       }
+    
+    // Financial Actions
+    case 'ADD_BUDGET':
+      return {
+        ...state,
+        finance: {
+          ...state.finance,
+          budgets: [...state.finance.budgets, {
+            ...action.payload,
+            id: action.payload.id || Date.now().toString(),
+            createdAt: new Date().toISOString()
+          }]
+        }
+      }
+    
+    case 'UPDATE_BUDGET':
+      return {
+        ...state,
+        finance: {
+          ...state.finance,
+          budgets: state.finance.budgets.map(budget =>
+            budget.id === action.payload.id ? { ...budget, ...action.payload } : budget
+          )
+        }
+      }
+    
+    case 'DELETE_BUDGET':
+      return {
+        ...state,
+        finance: {
+          ...state.finance,
+          budgets: state.finance.budgets.filter(budget => budget.id !== action.payload)
+        }
+      }
+    
+    case 'ADD_EXPENSE':
+      return {
+        ...state,
+        finance: {
+          ...state.finance,
+          expenses: [...state.finance.expenses, {
+            ...action.payload,
+            id: action.payload.id || Date.now().toString(),
+            createdAt: new Date().toISOString()
+          }]
+        }
+      }
+    
+    case 'UPDATE_EXPENSE':
+      return {
+        ...state,
+        finance: {
+          ...state.finance,
+          expenses: state.finance.expenses.map(expense =>
+            expense.id === action.payload.id ? { ...expense, ...action.payload } : expense
+          )
+        }
+      }
+    
+    case 'DELETE_EXPENSE':
+      return {
+        ...state,
+        finance: {
+          ...state.finance,
+          expenses: state.finance.expenses.filter(expense => expense.id !== action.payload)
+        }
+      }
+    
+    case 'ADD_INCOME':
+      return {
+        ...state,
+        finance: {
+          ...state.finance,
+          income: [...state.finance.income, {
+            ...action.payload,
+            id: action.payload.id || Date.now().toString(),
+            createdAt: new Date().toISOString()
+          }]
+        }
+      }
+    
+    case 'UPDATE_INCOME':
+      return {
+        ...state,
+        finance: {
+          ...state.finance,
+          income: state.finance.income.map(inc =>
+            inc.id === action.payload.id ? { ...inc, ...action.payload } : inc
+          )
+        }
+      }
+    
+    case 'DELETE_INCOME':
+      return {
+        ...state,
+        finance: {
+          ...state.finance,
+          income: state.finance.income.filter(inc => inc.id !== action.payload)
+        }
+      }
+    
+    case 'ADD_FINANCIAL_GOAL':
+      return {
+        ...state,
+        finance: {
+          ...state.finance,
+          financialGoals: [...state.finance.financialGoals, {
+            ...action.payload,
+            id: action.payload.id || Date.now().toString(),
+            createdAt: new Date().toISOString()
+          }]
+        }
+      }
+    
+    case 'UPDATE_FINANCIAL_GOAL':
+      return {
+        ...state,
+        finance: {
+          ...state.finance,
+          financialGoals: state.finance.financialGoals.map(goal =>
+            goal.id === action.payload.id ? { ...goal, ...action.payload } : goal
+          )
+        }
+      }
+    
+    case 'DELETE_FINANCIAL_GOAL':
+      return {
+        ...state,
+        finance: {
+          ...state.finance,
+          financialGoals: state.finance.financialGoals.filter(goal => goal.id !== action.payload)
+        }
+      }
+    
     default:
       return state
   }
