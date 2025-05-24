@@ -380,38 +380,39 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
       {/* Sticky Footer with Action Buttons */}
       <div className="flex-shrink-0 border-t border-surface-200 dark:border-surface-700 p-4 bg-white dark:bg-surface-800">
         <div className="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
-        {event && (
-          <motion.button
-            type="button"
-            onClick={handleDeleteClick}
-            className="flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ApperIcon name="Trash2" size={16} />
-            <span>Delete Event</span>
-          </motion.button>
-        )}
-        
-        <div className="flex space-x-3">
-          <motion.button
-            type="button"
-            onClick={onCancel}
-            className="px-6 py-2 border border-surface-300 dark:border-surface-600 text-surface-700 dark:text-surface-300 rounded-lg hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Cancel
-          </motion.button>
-          <motion.button
-            type="submit"
-            onClick={handleSubmit}
-            className="px-6 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-lg transition-all"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {event ? 'Update Event' : 'Create Event'}
-          </motion.button>
+          {event && (
+            <motion.button
+              type="button"
+              onClick={handleDeleteClick}
+              className="flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ApperIcon name="Trash2" size={16} />
+              <span>Delete Event</span>
+            </motion.button>
+          )}
+          
+          <div className="flex space-x-3">
+            <motion.button
+              type="button"
+              onClick={onCancel}
+              className="px-6 py-2 border border-surface-300 dark:border-surface-600 text-surface-700 dark:text-surface-300 rounded-lg hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Cancel
+            </motion.button>
+            <motion.button
+              type="submit"
+              onClick={handleSubmit}
+              className="px-6 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-lg transition-all"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {event ? 'Update Event' : 'Create Event'}
+            </motion.button>
+          </div>
         </div>
       </div>
 
