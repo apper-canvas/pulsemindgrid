@@ -42,6 +42,11 @@
   .grid-dots {
     background-image: radial-gradient(circle, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
     background-size: 20px 20px;
+}
+
+.bg-grid-dots {
+  background-image: radial-gradient(circle, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
   }
 }
 
@@ -70,6 +75,25 @@
 
 .animate-pulse-soft {
   animation: pulse-soft 2s ease-in-out infinite;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-delay-100 {
+  animation-delay: 100ms;
 }
 
 /* Responsive typography */
