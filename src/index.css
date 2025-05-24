@@ -155,3 +155,18 @@
 .scrollbar-track-transparent::-webkit-scrollbar-track {
   @apply bg-transparent;
 }
+
+/* Enhanced Modal Scrollbars */
+.modal-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(203 213 225) transparent;
+}
+
+.modal-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-surface-300 dark:bg-surface-600 rounded-full;
+  border-radius: 3px;
+}

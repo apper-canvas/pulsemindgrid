@@ -162,229 +162,224 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
   }
 
   return (
-    <div className="h-full flex flex-col">
-      {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-surface-300 dark:scrollbar-thumb-surface-600 scrollbar-track-transparent">
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          {/* Form Content */}
-          
-      {/* Title */}
-      <div>
-        <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-          Event Title *
-        </label>
-        <input
-          type="text"
-          value={formData.title}
-          onChange={(e) => handleInputChange('title', e.target.value)}
-          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors ${
-            errors.title
-              ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-              : 'border-surface-300 dark:border-surface-600'
-          } bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100`}
-          placeholder="Enter event title..."
-        />
-        {errors.title && <p className="mt-1 text-sm text-red-500">{errors.title}</p>}
-      </div>
-
-      {/* Event Type */}
-      <div>
-        <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-          Event Type
-        </label>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
-          {eventTypes.map((type) => (
-            <motion.button
-              key={type.value}
-              type="button"
-              onClick={() => handleInputChange('type', type.value)}
-              className={`flex items-center space-x-2 p-3 rounded-lg border transition-all ${
-                formData.type === type.value
-                  ? 'border-primary bg-primary/10 text-primary'
-                  : 'border-surface-300 dark:border-surface-600 hover:border-primary/50'
-              }`}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div className={`w-3 h-3 rounded-full`} style={{ backgroundColor: type.color }} />
-              <ApperIcon name={type.icon} size={16} />
-              <span className="text-sm font-medium">{type.label}</span>
-            </motion.button>
-          ))}
-        </div>
-      </div>
-
-      {/* All Day Toggle */}
-      <div className="flex items-center space-x-3">
-        <motion.button
-          type="button"
-          onClick={() => handleInputChange('isAllDay', !formData.isAllDay)}
-          className={`relative w-12 h-6 rounded-full transition-colors ${
-            formData.isAllDay ? 'bg-primary' : 'bg-surface-300 dark:bg-surface-600'
-          }`}
-          whileTap={{ scale: 0.95 }}
-        >
-          <motion.div
-            className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow-md"
-            animate={{ x: formData.isAllDay ? 24 : 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+    <div className="flex flex-col h-full">
+      {/* Scrollable Form Content */}
+      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin scrollbar-thumb-surface-300 dark:scrollbar-thumb-surface-600 scrollbar-track-transparent">
+        {/* Title */}
+        <div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
+            Event Title *
+          </label>
+          <input
+            type="text"
+            value={formData.title}
+            onChange={(e) => handleInputChange('title', e.target.value)}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors ${
+              errors.title
+                ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+                : 'border-surface-300 dark:border-surface-600'
+            } bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100`}
+            placeholder="Enter event title..."
           />
-        </motion.button>
-        <label className="text-sm font-medium text-surface-700 dark:text-surface-300">
-          All day event
-        </label>
-      </div>
+          {errors.title && <p className="mt-1 text-sm text-red-500">{errors.title}</p>}
+        </div>
 
-      {/* Date and Time */}
-      {!formData.isAllDay ? (
+        {/* Event Type */}
+        <div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
+            Event Type
+          </label>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
+            {eventTypes.map((type) => (
+              <motion.button
+                key={type.value}
+                type="button"
+                onClick={() => handleInputChange('type', type.value)}
+                className={`flex items-center space-x-2 p-3 rounded-lg border transition-all ${
+                  formData.type === type.value
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-surface-300 dark:border-surface-600 hover:border-primary/50'
+                }`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className={`w-3 h-3 rounded-full`} style={{ backgroundColor: type.color }} />
+                <ApperIcon name={type.icon} size={16} />
+                <span className="text-sm font-medium">{type.label}</span>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+
+        {/* All Day Toggle */}
+        <div className="flex items-center space-x-3">
+          <motion.button
+            type="button"
+            onClick={() => handleInputChange('isAllDay', !formData.isAllDay)}
+            className={`relative w-12 h-6 rounded-full transition-colors ${
+              formData.isAllDay ? 'bg-primary' : 'bg-surface-300 dark:bg-surface-600'
+            }`}
+            whileTap={{ scale: 0.95 }}
+          >
+            <motion.div
+              className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow-md"
+              animate={{ x: formData.isAllDay ? 24 : 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            />
+          </motion.button>
+          <label className="text-sm font-medium text-surface-700 dark:text-surface-300">
+            All day event
+          </label>
+        </div>
+
+        {/* Date and Time */}
+        {!formData.isAllDay ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
+                Start Time *
+              </label>
+              <input
+                type="datetime-local"
+                value={formData.startTime}
+                onChange={(e) => handleInputChange('startTime', e.target.value)}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors ${
+                  errors.startTime
+                    ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+                    : 'border-surface-300 dark:border-surface-600'
+                } bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100`}
+              />
+              {errors.startTime && <p className="mt-1 text-sm text-red-500">{errors.startTime}</p>}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
+                End Time *
+              </label>
+              <input
+                type="datetime-local"
+                value={formData.endTime}
+                onChange={(e) => handleInputChange('endTime', e.target.value)}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors ${
+                  errors.endTime
+                    ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+                    : 'border-surface-300 dark:border-surface-600'
+                } bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100`}
+              />
+              {errors.endTime && <p className="mt-1 text-sm text-red-500">{errors.endTime}</p>}
+            </div>
+          </div>
+        ) : (
+          <div>
+            <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
+              Date
+            </label>
+            <input
+              type="date"
+              value={formData.startTime ? format(new Date(formData.startTime), 'yyyy-MM-dd') : ''}
+              onChange={(e) => {
+                const dateValue = e.target.value + 'T00:00'
+                handleInputChange('startTime', dateValue)
+                handleInputChange('endTime', dateValue)
+              }}
+              className="w-full px-4 py-3 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100"
+            />
+          </div>
+        )}
+
+        {/* Description */}
+        <div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
+            Description
+          </label>
+          <textarea
+            value={formData.description}
+            onChange={(e) => handleInputChange('description', e.target.value)}
+            rows={3}
+            className="w-full px-4 py-3 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100"
+            placeholder="Add event description..."
+          />
+        </div>
+
+        {/* Location */}
+        <div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
+            Location
+          </label>
+          <input
+            type="text"
+            value={formData.location}
+            onChange={(e) => handleInputChange('location', e.target.value)}
+            className="w-full px-4 py-3 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100"
+            placeholder="Enter location..."
+          />
+        </div>
+
+        {/* Reminder */}
+        <div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
+            Reminder
+          </label>
+          <select
+            value={formData.reminder || ''}
+            onChange={(e) => handleInputChange('reminder', e.target.value ? parseInt(e.target.value) : null)}
+            className="w-full px-4 py-3 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100"
+          >
+            {reminderOptions.map((option) => (
+              <option key={option.value || 'none'} value={option.value || ''}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Link to Task/Goal */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-              Start Time *
+              Link to Task
             </label>
-            <input
-              type="datetime-local"
-              value={formData.startTime}
-              onChange={(e) => handleInputChange('startTime', e.target.value)}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors ${
-                errors.startTime
-                  ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-                  : 'border-surface-300 dark:border-surface-600'
-              } bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100`}
-            />
-            {errors.startTime && <p className="mt-1 text-sm text-red-500">{errors.startTime}</p>}
+            <select
+              value={formData.linkedTaskId || ''}
+              onChange={(e) => {
+                handleInputChange('linkedTaskId', e.target.value || null)
+                if (e.target.value) handleInputChange('linkedProjectId', null)
+              }}
+              className="w-full px-4 py-3 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100"
+            >
+              <option value="">Select a task...</option>
+              {tasks.map((task) => (
+                <option key={task.id} value={task.id}>
+                  {task.title}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-              End Time *
+              Link to Goal
             </label>
-            <input
-              type="datetime-local"
-              value={formData.endTime}
-              onChange={(e) => handleInputChange('endTime', e.target.value)}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors ${
-                errors.endTime
-                  ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-                  : 'border-surface-300 dark:border-surface-600'
-              } bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100`}
-            />
-            {errors.endTime && <p className="mt-1 text-sm text-red-500">{errors.endTime}</p>}
+            <select
+              value={formData.linkedProjectId || ''}
+              onChange={(e) => {
+                handleInputChange('linkedProjectId', e.target.value || null)
+                if (e.target.value) handleInputChange('linkedTaskId', null)
+              }}
+              className="w-full px-4 py-3 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100"
+            >
+              <option value="">Select a goal...</option>
+              {goals.map((goal) => (
+                <option key={goal.id} value={goal.id}>
+                  {goal.title}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
-      ) : (
-        <div>
-          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-            Date
-          </label>
-          <input
-            type="date"
-            value={formData.startTime ? format(new Date(formData.startTime), 'yyyy-MM-dd') : ''}
-            onChange={(e) => {
-              const dateValue = e.target.value + 'T00:00'
-              handleInputChange('startTime', dateValue)
-              handleInputChange('endTime', dateValue)
-            }}
-            className="w-full px-4 py-3 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100"
-          />
-        </div>
-      )}
-
-      {/* Description */}
-      <div>
-        <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-          Description
-        </label>
-        <textarea
-          value={formData.description}
-          onChange={(e) => handleInputChange('description', e.target.value)}
-          rows={3}
-          className="w-full px-4 py-3 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100"
-          placeholder="Add event description..."
-        />
       </div>
 
-      {/* Location */}
-      <div>
-        <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-          Location
-        </label>
-        <input
-          type="text"
-          value={formData.location}
-          onChange={(e) => handleInputChange('location', e.target.value)}
-          className="w-full px-4 py-3 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100"
-          placeholder="Enter location..."
-        />
-      </div>
-
-      {/* Reminder */}
-      <div>
-        <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-          Reminder
-        </label>
-        <select
-          value={formData.reminder || ''}
-          onChange={(e) => handleInputChange('reminder', e.target.value ? parseInt(e.target.value) : null)}
-          className="w-full px-4 py-3 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100"
-        >
-          {reminderOptions.map((option) => (
-            <option key={option.value || 'none'} value={option.value || ''}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Link to Task/Goal */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-            Link to Task
-          </label>
-          <select
-            value={formData.linkedTaskId || ''}
-            onChange={(e) => {
-              handleInputChange('linkedTaskId', e.target.value || null)
-              if (e.target.value) handleInputChange('linkedProjectId', null)
-            }}
-            className="w-full px-4 py-3 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100"
-          >
-            <option value="">Select a task...</option>
-            {tasks.map((task) => (
-              <option key={task.id} value={task.id}>
-                {task.title}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-            Link to Goal
-          </label>
-          <select
-            value={formData.linkedProjectId || ''}
-            onChange={(e) => {
-              handleInputChange('linkedProjectId', e.target.value || null)
-              if (e.target.value) handleInputChange('linkedTaskId', null)
-            }}
-            className="w-full px-4 py-3 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100"
-          >
-            <option value="">Select a goal...</option>
-            {goals.map((goal) => (
-              <option key={goal.id} value={goal.id}>
-                {goal.title}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-        </form>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex-shrink-0 bg-white dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700 p-6">
-        <div className="flex flex-col lg:flex-row justify-between items-center space-y-3 lg:space-y-0">
+      {/* Sticky Footer with Action Buttons */}
+      <div className="flex-shrink-0 border-t border-surface-200 dark:border-surface-700 p-6 bg-white dark:bg-surface-800">
+        <div className="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
         {event && (
           <motion.button
             type="button"
@@ -434,7 +429,7 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
           >
-            <h4 className="text-lg font-semibold text-surface-800 dark:text-surface-200 mb-2">
+            className="w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-lg transition-all font-medium"
               Delete Event
             </h4>
             <p className="text-surface-600 dark:text-surface-400 mb-6">
@@ -442,8 +437,8 @@ export default function EventForm({ event, selectedDate, selectedTime, onSave, o
             </p>
             <div className="flex space-x-3 justify-end">
               <button
-                onClick={() => setShowDeleteConfirm(false)}
                 className="px-4 py-2 text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-700 rounded-lg transition-colors"
+      {/* Delete Confirmation Modal */}
               >
                 Cancel
               </button>
