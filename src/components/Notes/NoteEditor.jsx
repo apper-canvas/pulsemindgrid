@@ -160,6 +160,11 @@ export default function NoteEditor({ note, onClose }) {
     return linkedNote ? linkedNote.title : 'Unknown Note'
   }
 
+  const getLinkedHighlightText = (highlightId) => {
+    const highlight = highlights.find(h => h.id === highlightId)
+    return highlight ? highlight.text.substring(0, 50) + '...' : 'Unknown Highlight'
+  }
+
   const quillModules = {
     toolbar: [
       [{ 'header': [1, 2, 3, false] }],
@@ -260,6 +265,49 @@ export default function NoteEditor({ note, onClose }) {
                 <option key={goal.id} value={goal.id}>{goal.title}</option>
               ))}
             </select>
+          </div>
+        </div>
+
+        {/* Highlight Linking */}
+        <div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
+            Link to Highlight
+          </label>
+          <div className="space-y-3">
+            <select
+              value={formData.linkedHighlightId}
+              onChange={(e) => setFormData(prev => ({ ...prev, linkedHighlightId: e.target.value }))}
+              className="w-full px-4 py-3 border border-surface-200 dark:border-surface-600 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-surface-700 transition-colors"
+            >
+              <option value="">Select a highlight...</option>
+              {highlights.map(highlight => (
+                <option key={highlight.id} value={highlight.id}>
+                  {highlight.text.substring(0, 60)}...
+                </option>
+              ))}
+            </select>
+            
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="isHighlightAnnotation"
+                checked={formData.isHighlightAnnotation}
+                onChange={(e) => setFormData(prev => ({ ...prev, isHighlightAnnotation: e.target.checked }))}
+                className="w-4 h-4 text-primary focus:ring-primary border-surface-300 rounded"
+              />
+              <label htmlFor="isHighlightAnnotation" className="text-sm text-surface-700 dark:text-surface-300">
+                This note is an annotation for a highlight
+              </label>
+            </div>
+            
+            <button
+              type="button"
+              onClick={() => setShowHighlightEditor(true)}
+              className="px-4 py-2 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition-colors"
+            >
+              <ApperIcon name="Highlighter" size={16} className="mr-2" />
+              Create New Highlight
+            </button>
           </div>
         </div>
 
@@ -400,6 +448,12 @@ export default function NoteEditor({ note, onClose }) {
         {/* Current Links Summary */}
         {(formData.linkedTaskId || formData.linkedGoalId || linkedNotes.length > 0) && (
           <div className="p-4 bg-surface-50 dark:bg-surface-700 rounded-xl">
+            {formData.linkedHighlightId && (
+              <div className="flex items-center gap-2">
+                <ApperIcon name="Highlighter" size={14} />
+                <span>Highlight: {getLinkedHighlightText(formData.linkedHighlightId)}</span>
+              </div>
+            )}
             <h4 className="text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">Current Links</h4>
             <div className="space-y-1 text-sm text-surface-600 dark:text-surface-400">
               {formData.linkedTaskId && (
@@ -452,6 +506,14 @@ export default function NoteEditor({ note, onClose }) {
           )}
         </button>
       </div>
+      
+      {/* Highlight Editor Modal */}
+      {showHighlightEditor && (
+        <HighlightEditor
+          onClose={() => setShowHighlightEditor(false)}
+          onHighlightCreated={(highlightId) => setFormData(prev => ({ ...prev, linkedHighlightId: highlightId }))}
+        />
+      )}
     </form>
   )
 }

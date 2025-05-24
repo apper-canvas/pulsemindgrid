@@ -52,6 +52,7 @@ export default function Notes() {
   const getLinkedItems = (note) => {
     const linkedTasks = tasks.filter(task => note.linkedTasks?.includes(task.id))
     const linkedGoals = goals.filter(goal => note.linkedGoals?.includes(goal.id))
+    const highlights = useSelector(state => state.highlights || [])
     const linkedNotes = notes.filter(n => note.linkedNoteIds?.includes(n.id))
     return { linkedTasks, linkedGoals, linkedNotes }
   }
@@ -152,6 +153,14 @@ export default function Notes() {
                 whileHover={{ scale: 1.02 }}
               >
                 <div className="flex-1">
+                  {/* Highlight Annotation Indicator */}
+                  {note.isHighlightAnnotation && (
+                    <div className="flex items-center gap-2 mb-2 px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-xs rounded-full">
+                      <ApperIcon name="Highlighter" size={12} />
+                      <span>Highlight Annotation</span>
+                    </div>
+                  )}
+                  
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-semibold text-surface-800 dark:text-surface-200 line-clamp-2">{note.title}</h3>
                     <button
@@ -177,6 +186,13 @@ export default function Notes() {
                     ))}
                   </div>
                   {/* Linked Items Indicators */}
+                  {note.linkedHighlightId && (
+                    <div className="flex items-center gap-1 px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-xs rounded-full mb-2">
+                      <ApperIcon name="Highlighter" size={12} />
+                      <span>Linked to highlight</span>
+                    </div>
+                  )}
+                  
                   {(linkedTasks.length > 0 || linkedGoals.length > 0 || noteLinks.length > 0) && (
                     <div className="flex flex-wrap gap-2 mb-3">
                       {linkedTasks.length > 0 && (

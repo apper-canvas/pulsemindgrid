@@ -20,7 +20,7 @@ export default function NoteModal({ isOpen, onClose, note }) {
           exit={{ scale: 0.95, opacity: 0 }}
           className="bg-white dark:bg-surface-800 rounded-2xl shadow-2xl w-full max-w-4xl modal-viewport-constrained overflow-hidden z-modal-system flex flex-col"
           onClick={(e) => e.stopPropagation()}
-          style={{ height: 'calc(100vh - 4rem)', maxHeight: '90vh' }}
+          style={{ height: 'calc(100vh - 2rem)', maxHeight: '95vh' }}
         >
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-surface-200 dark:border-surface-700">
