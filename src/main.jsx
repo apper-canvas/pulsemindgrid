@@ -133,23 +133,6 @@ const rootReducer = (state = initialState, action) => {
             : event
         )
       }
-    default:
-      return state
-  }
-}
-
-const store = configureStore({
-  reducer: rootReducer
-})
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>
-)
-    
     case 'ADD_NOTE':
       return {
         ...state,
@@ -204,3 +187,20 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             : note
         )
       }
+    
+    default:
+      return state
+  }
+}
+
+const store = configureStore({
+  reducer: rootReducer
+})
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
+)
