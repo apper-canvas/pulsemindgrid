@@ -23,6 +23,8 @@
     display: none;
   }
   
+}
+
 /* Responsive typography */
 @screen sm {
   .text-responsive-sm {
